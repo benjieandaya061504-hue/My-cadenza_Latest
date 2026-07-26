@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import C from './theme.js'
-import { API_ADMIN } from '../config.js'
 
+const API = (import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/admin'
 
 export default function LessonManagement({ isMobile, isTablet }) {
   const [lessons, setLessons] = useState([])
@@ -25,7 +25,7 @@ export default function LessonManagement({ isMobile, isTablet }) {
   // Fetch lessons
   const fetchLessons = async () => {
     try {
-      const res = await fetch(`${API_ADMIN}/lessons`, {
+      const res = await fetch(`${API}/lessons`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       })
       const data = await res.json()
@@ -101,7 +101,7 @@ export default function LessonManagement({ isMobile, isTablet }) {
 
     try {
       const isEdit = editingId !== null
-      const url = isEdit ? `${API_ADMIN}/lessons/${editingId}` : `${API_ADMIN}/lessons`
+      const url = isEdit ? `${API}/lessons/${editingId}` : `${API}/lessons`
       const method = isEdit ? 'PUT' : 'POST'
 
       const res = await fetch(url, {

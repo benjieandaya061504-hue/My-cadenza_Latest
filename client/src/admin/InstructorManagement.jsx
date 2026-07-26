@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import C from './theme.js'
-import { API_ADMIN } from '../config.js'
 
+const API = (import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/admin'
 
 export default function InstructorManagement({ isMobile, isTablet }) {
   const [instructors, setInstructors] = useState([])
@@ -32,7 +32,7 @@ export default function InstructorManagement({ isMobile, isTablet }) {
   // Fetch instructors
   const fetchInstructors = async () => {
     try {
-      const res = await fetch(`${API_ADMIN}/instructors`, {
+      const res = await fetch(`${API}/instructors`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       })
       const data = await res.json()
@@ -51,7 +51,7 @@ export default function InstructorManagement({ isMobile, isTablet }) {
   // Fetch specialties
   const fetchSpecialties = async () => {
     try {
-      const res = await fetch(`${API_ADMIN}/specialties`, {
+      const res = await fetch(`${API}/specialties`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       })
       const data = await res.json()
@@ -146,7 +146,7 @@ export default function InstructorManagement({ isMobile, isTablet }) {
     setFormLoading(true)
 
     try {
-      const res = await fetch(`${API_ADMIN}/instructors/${editingInstructor.id}`, {
+      const res = await fetch(`${API}/instructors/${editingInstructor.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

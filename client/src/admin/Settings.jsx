@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import C from './theme.js'
-import { API_ADMIN } from '../config.js'
 
+const API = (import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/admin'
 
 export default function Settings({ isMobile, isTablet }) {
   const [specialties, setSpecialties] = useState([])
@@ -26,7 +26,7 @@ export default function Settings({ isMobile, isTablet }) {
   // Fetch specialties
   const fetchSpecialties = async () => {
     try {
-      const res = await fetch(`${API_ADMIN}/specialties`, {
+      const res = await fetch(`${API}/specialties`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       })
       const data = await res.json()
@@ -106,7 +106,7 @@ export default function Settings({ isMobile, isTablet }) {
 
     try {
       const isEdit = editingId !== null
-      const url = isEdit ? `${API_ADMIN}/specialties/${editingId}` : `${API_ADMIN}/specialties`
+      const url = isEdit ? `${API}/specialties/${editingId}` : `${API}/specialties`
       const method = isEdit ? 'PUT' : 'POST'
 
       const res = await fetch(url, {
@@ -141,7 +141,7 @@ export default function Settings({ isMobile, isTablet }) {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`${API_ADMIN}/specialties/${id}`, {
+      const res = await fetch(`${API}/specialties/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${getToken()}` },
       })

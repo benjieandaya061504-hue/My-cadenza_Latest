@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import C from './theme.js'
-import { API_ADMIN } from '../config.js'
 
+const API = (import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/admin'
 
 export default function UserManagement({ isMobile, isTablet }) {
   const [users, setUsers] = useState([])
@@ -38,7 +38,7 @@ export default function UserManagement({ isMobile, isTablet }) {
   // Fetch users
   const fetchUsers = async () => {
     try {
-      const res = await fetch(`${API_ADMIN}/users`, {
+      const res = await fetch(`${API}/users`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       })
       const data = await res.json()
@@ -57,7 +57,7 @@ export default function UserManagement({ isMobile, isTablet }) {
   // Fetch roles
   const fetchRoles = async () => {
     try {
-      const res = await fetch(`${API_ADMIN}/roles`, {
+      const res = await fetch(`${API}/roles`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       })
       const data = await res.json()
@@ -72,7 +72,7 @@ export default function UserManagement({ isMobile, isTablet }) {
   // Fetch specialties
   const fetchSpecialties = async () => {
     try {
-      const res = await fetch(`${API_ADMIN}/specialties`, {
+      const res = await fetch(`${API}/specialties`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       })
       const data = await res.json()
@@ -236,7 +236,7 @@ export default function UserManagement({ isMobile, isTablet }) {
         body.specialty_ids = selectedSpecialties
       }
 
-      const url = isEdit ? `${API_ADMIN}/users/${editingId}` : `${API_ADMIN}/users`
+      const url = isEdit ? `${API}/users/${editingId}` : `${API}/users`
       const method = isEdit ? 'PUT' : 'POST'
 
       const res = await fetch(url, {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import C from './theme.js'
-import { API_ADMIN } from '../config.js'
 
+const API = (import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/admin'
 
 export default function InstrumentManagement({ isMobile, isTablet }) {
   const [instruments, setInstruments] = useState([])
@@ -32,7 +32,7 @@ export default function InstrumentManagement({ isMobile, isTablet }) {
   // Fetch instruments
   const fetchInstruments = async () => {
     try {
-      const res = await fetch(`${API_ADMIN}/instruments`, {
+      const res = await fetch(`${API}/instruments`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       })
       const data = await res.json()
@@ -127,7 +127,7 @@ export default function InstrumentManagement({ isMobile, isTablet }) {
 
     try {
       const isEdit = editingId !== null
-      const url = isEdit ? `${API_ADMIN}/instruments/${editingId}` : `${API_ADMIN}/instruments`
+      const url = isEdit ? `${API}/instruments/${editingId}` : `${API}/instruments`
       const method = isEdit ? 'PUT' : 'POST'
 
       const res = await fetch(url, {

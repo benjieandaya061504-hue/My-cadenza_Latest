@@ -3,6 +3,9 @@
  * Handles token storage, retrieval, and authenticated requests
  */
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+export const getApiBase = () => API_BASE
+
 const TOKEN_KEY = 'cadenza_token'
 const USER_KEY = 'cadenza_user'
 const REMEMBER_EMAIL_KEY = 'cadenza_remember_email'

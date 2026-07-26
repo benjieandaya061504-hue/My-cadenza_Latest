@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { API_BASE_URL, API_AUTH } from '../config.js'
 
 const roleConfig = {
   admin: {
@@ -51,8 +50,9 @@ function LandingPage() {
 
   // Check backend server health on mount
   useEffect(() => {
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000'
     const checkServer = () => {
-      fetch(`${API_BASE_URL}/`, { method: 'GET', signal: AbortSignal.timeout(3000) })
+      fetch(`${API_BASE}/`, { method: 'GET', signal: AbortSignal.timeout(3000) })
         .then(res => {
           if (res.ok) {
             setServerOnline(true)
@@ -144,7 +144,8 @@ function LandingPage() {
     setLoading(true)
 
     // Real API authentication - match backend auth route
-    fetch(`${API_AUTH}/login`, {
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+    fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
